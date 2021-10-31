@@ -67,12 +67,77 @@
 
   environment = {
     systemPackages = with pkgs; [
+      aria2 # "aria2" command (versatile and fast download utility)
+      bzip2 # "bzip2" command
+      clinfo # "clinfo" command (Show OpenCL devices)
+      curl # "curl" command
+      fast-cli # "fast" command (measuring downlink speed
+      findutils # "find" command (search for files in a directory)
+      fping # "fping" command (packet loss awape ICMP ping command)
+      gping # "gping" command
+      gzip
+      hostname
+      audacity
+      barrier
+      ffmpeg
+      electrum
+      etcher
+      filezilla
+      flameshot
+      gnome.nautilus
+      gparted
+      spotify
+      obs-studio
+      pavucontrol
+      playerctl
+      qbittorrent
+      sqlitebrowser
+      trash-cli
+      mullvad-vpn
+      virt-manager
+      virt-top 
+      virt-viewer
+      virt-what
+      vlc
+      whois
+      xclip
+      xmousepasteblock
+      htop # "htop" command (interactive process viewer)
+      ioping # "ioping" command (simple disk I/O latency testing/monitoring tool)
+      iotop # "iotop" command
+      hwinfo # "hwinfo" command
+      jq # "jq" command (command-line JSON parser)
+      less # "less" command (pager program)
+      lshw # "lshw" command (list hardware)
+      mat2 # "mat2" command (media file metadata removal)
+      ncdu # "ncdu" command
+      neofetch # "netfetch" command (system info)
+      restic # backups
+      p7zip # "7z" command
+      pciutils # "lspci" command (for listing attached PCI devices)
+      pwgen-secure
+      python39 # "python3" command
+      stress # "stress" command
+      stress-ng # "stress-ng" command (stress test systems)
+      wireshark
+      tldr # "tldr" command (simplified and community-driven man pages)
+      tmux #for terminal multiplexing
+      unrar # "unrar" command
+      unzip # "unzip" command
+      usbutils # "lsusb" command
+      zip # "zip" command
+      zlib
+      zstd # "unzstd" command
       neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
       wget
       vscode
       keepassxc
+      dropbox
+      discord
+      cryptomator
       xfce.xfce4-clipman-plugin
       firefox
+      rofi
       xfce.xfce4-terminal
       git
   ];
