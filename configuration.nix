@@ -11,16 +11,42 @@
     ];
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  location = {
+    latitude = 0.0;
+    longitude = 0.0;
+  };
+  boot = {
+    loader = let limit = 50; in
+    {
+      grub = {
+        configurationLimit = limit;
+      };
+      systemd-boot = {
+        configurationLimit = limit;
+      };
+      systemd-boot = {
+        enable = true;
+      };
+      efi = {
+        canTouchEfiVariables = true;
+      };
+    };
+    kernelParams = [
+      "random.trust_cpu=on"
+    ];
+  };
 
   nixpkgs.config.allowUnfree = true;
 
   users.users = {
 	zure = {
 		isNormalUser = true;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICbLY2iqUz4z+c+Kzcskdcc8fIuZAhFfO8YP2umtnUQe zure@nixos"
+    ];
 		extraGroups = [
 			"wheel"
+      "libvirtd"
 		];
 	};
   };
@@ -30,7 +56,14 @@
  };
 
   services = {
+    mullvad-vpn = {
+      enable = true;
+    };
+    redshift = {
+      enable = true;
+    };
     xserver = {
+      xkbOptions = "caps:none";
       resolutions = [{
         x = 1920;
         y = 1080;    
@@ -49,6 +82,10 @@
     };
   };
 
+  powerManagement = {
+    cpuFreqGovernor = "performance";
+  };
+
   programs = {
     ssh = {
       # Start an OpenSSH agent for each user that logs in
@@ -63,6 +100,15 @@
     opengl = {
       enable = true;
     };
+  };
+
+  security = {
+      sudo = {
+        extraConfig = ''
+        # Provice visual feedback when typing passwords
+        Defaults pwfeedback
+        '';
+      };
   };
 
   environment = {
@@ -88,6 +134,7 @@
       gparted
       spotify
       obs-studio
+      betterdiscordctl
       pavucontrol
       playerctl
       qbittorrent
@@ -102,6 +149,7 @@
       whois
       xclip
       xmousepasteblock
+      pulseaudio
       htop # "htop" command (interactive process viewer)
       ioping # "ioping" command (simple disk I/O latency testing/monitoring tool)
       iotop # "iotop" command
@@ -146,6 +194,17 @@
     };
   };
 
+  networking = {
+    useDHCP = false;
+    interfaces.enp0s3.useDHCP = true;
+    nameservers = [
+      "1.1.1.1"
+      "1.0.0.1"
+      "2606:4700:4700::1111"
+      "2606:4700:4700::1001"
+    ];
+
+  };
   # networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -155,8 +214,7 @@
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
-  networking.useDHCP = false;
-  networking.interfaces.enp0s3.useDHCP = true;
+
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
